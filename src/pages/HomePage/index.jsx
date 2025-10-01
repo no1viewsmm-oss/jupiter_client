@@ -3,9 +3,6 @@ import '../HomePage/index.scss';
 import { Route, Routes, BrowserRouter, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import preview from "../../assets/home-preview-mobile.png"; 
-import RaydiumLogo from './components/RaydiumLogo';
-import WavyBackground from './components/WavyBackground';
-import StatCard from './components/StatCard';
 
 const HomePage = () => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
