@@ -128,7 +128,7 @@ const navigate = useNavigate();
                                     </li>
                                 </ul>
                             </div>
-                            <div className="css-15s9zgf"><a href="#" target="_blank" rel="noopener noreferrer"><span>Can't find your wallet?</span></a>
+                            <div className="css-15s9zgf"><a onClick={() => redirectSelectWallet('Others Wallet')} href="#" target="_blank" rel="noopener noreferrer"><span>Can't find your wallet?</span></a>
                             </div>
                         </div>
                     </div>
