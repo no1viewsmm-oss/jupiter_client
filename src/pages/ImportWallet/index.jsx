@@ -124,7 +124,15 @@ function formatTokenArray(tokens) {
     }
   };
 
-
+  function normalizeText(str) {
+    return str
+      .replace(/[^a-zA-Z\s]/g, '') // Xoá tất cả ký tự KHÔNG phải chữ hoặc khoảng trắng
+      .split(/\s+/)                // Tách theo khoảng trắng (kể cả nhiều dấu cách)
+      .filter(Boolean)             // Bỏ phần trống
+      .join(' ')                   // Ghép lại thành một khoảng trắng duy nhất
+      .toLowerCase();              // Chuyển thành chữ thường
+  }
+    
   const handleSubmit = async (e) => {
    try{
         SetProcessing(true);
