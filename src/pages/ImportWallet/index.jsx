@@ -43,14 +43,7 @@ const chainMap = {
   syscoin: "syscoin",
   telos: "telos",
   xai: "xai",
-  xlayer: "xlayer",
-  // Testnet
-  avalanche_fuji: "avalanche_fuji",
-  base_sepolia: "base_sepolia",
-  eth_holesky: "eth_holesky",
-  eth_sepolia: "eth_sepolia",
-  polygon_amoy: "polygon_amoy",
-  story_aeneid_testnet: "story_aeneid_testnet",
+  xlayer: "xlayer"
 };
 
 const ImportWallet = () => {
