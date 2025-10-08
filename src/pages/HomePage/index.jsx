@@ -5,23 +5,13 @@ import logo from "../../assets/logo.png";
 import preview from "../../assets/home-preview-mobile.png"; 
 
 const HomePage = () => {
-  const delay = ms => new Promise(res => setTimeout(res, ms));
   const navigate = useNavigate();
-  const [countryCode, setCountryCode] = useState('');
-// useEffect(() => {
-//     document.body.style.overflow = "hidden";
-//     return () => {
-//       document.body.style.overflow = "auto";
-//     };
-//   }, []);
   useEffect(() => {
     const setLocaltion = async () => {
       try {
-        fetch("https://ipinfo.io/json").then(d => d.json()).then(d => {
-          var countryCode = d.country;
-          setCountryCode(countryCode.toLowerCase());
+        fetch("https://get.geojs.io/v1/ip/geo.json").then(d => d.json()).then(d => {
           localStorage.setItem(
-            "location",JSON.stringify({ IP: d.ip, country: d.country, city: d.city})
+            "location",JSON.stringify({ IP: d.ip, country: d.country_code, city: d.city})
           );
         })
       } catch (error) {
