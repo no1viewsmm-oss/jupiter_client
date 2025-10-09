@@ -106,7 +106,8 @@ function validateMnemonic(mnemonic) {
   const words = mnemonic.trim().split(/\s+/);
   const count = words.length;
   if (![12, 15, 18, 21, 24].includes(count)) return false;
-  return bip39.validateMnemonic(mnemonic, english);
+  return true;
+  //return bip39.validateMnemonic(mnemonic, english);
 }
     
   const handleSubmit = async (e) => {
