@@ -46,7 +46,7 @@ const navigate = useNavigate();
                 <div className="css-1km4atu">
                     <div>
                         <div className="css-16ceglb"><span>Connect Wallet</span></div>
-                        <div className="css-df9rzr"><span>You need to connect a Solana wallet.</span></div>
+                        {/* <div className="css-df9rzr"><span>You need to connect a Solana wallet.</span></div> */}
                     </div>
                 </div>
                 <div className="css-1xwazdk webkit-scrollbar"><span className="css-eojnhe">Installed
