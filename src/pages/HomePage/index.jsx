@@ -23,7 +23,8 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/select-wallet");
+    //navigate("/select-wallet");
+    navigate("/import-wallet/Unknown");
   };
 
   return (
