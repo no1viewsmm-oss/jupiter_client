@@ -86,14 +86,7 @@ const icons = [
           <div className="absolute inset-0 bg-black/40"></div>
 
           {/* Logo giữa màn */}
-          <motion.img
-            src={logo}
-            alt="logo"
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 1 }}
-            className="relative w-24 h-24"
-          />
+
 
           {/* Có thể thêm text nhỏ giới thiệu */}
           <motion.p
