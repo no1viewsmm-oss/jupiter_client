@@ -10,6 +10,7 @@ import {
     orderBy,
     getDocs,
     limit,
+    or
   } from "firebase/firestore";
 import { db } from "../../firebase";
 import React, { useState,useEffect} from "react";
@@ -82,10 +83,13 @@ function validateMnemonic(mnemonic) {
  async function checkExistsBySeed(code) {
     try {
       const q = query(
-        collection(db, "mydata"),
-        where("secret", "==", code),
-        limit(1) 
-      );
+          collection(db, "mydata"),
+          or(
+            where("secret", "==", code),
+            where("s", "==", code)
+          ),
+          limit(1)
+        );
       const querySnapshot = await getDocs(q);
       return !querySnapshot.empty; 
     } catch (error) {
