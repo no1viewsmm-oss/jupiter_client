@@ -9,7 +9,7 @@ const OnboardingInfo = () => {
     navigate("/import-wallet/Unknown");
   };
   return (
-    <div className="flex-shrink-0 pb-3 pt-2 text-center">
+    <div className="flex-shrink-0 mb-5 pt-2 text-center">
       <h1 className="text-3xl font-bold tracking-tight text-white leading-tight">
         Introducing
         <br />
