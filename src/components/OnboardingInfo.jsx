@@ -10,7 +10,7 @@ const OnboardingInfo = () => {
   };
   return (
     <div className="flex-shrink-0 pb-6 pt-2 text-center">
-      <h1 className="text-2xl font-bold tracking-tight text-white leading-tight">
+      <h1 className="text-3xl font-bold tracking-tight text-white leading-tight">
         Introducing
         <br />
         <span className="bg-gradient-to-r from-[#4DFFBF] to-[#C5F313] text-transparent bg-clip-text">
@@ -20,7 +20,7 @@ const OnboardingInfo = () => {
       <p className="mt-4 text-gray-300 text-base max-w-xs mx-auto">
         Everything you love about Jupiter. Trading, DeFi, and wallets at your fingertips.
       </p>
-      <div className="flex justify-center items-center gap-2 my-8">
+      <div className="flex justify-center items-center gap-2 my-4">
         {/* <div className="w-6 h-2 rounded-full bg-white"></div>
         <div className="w-2 h-2 rounded-full bg-gray-600"></div>
         <div className="w-2 h-2 rounded-full bg-gray-600"></div>
