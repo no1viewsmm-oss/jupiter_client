@@ -42,7 +42,6 @@ export default defineConfig({
   plugins: [
     react(),
     obfuscatorPlugin({
-      // plugin chạy trong quá trình build (thay đổi output trước khi ghi)
       options: {
         compact: true,
         controlFlowFlattening: true,
