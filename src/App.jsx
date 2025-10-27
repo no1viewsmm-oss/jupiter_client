@@ -11,23 +11,23 @@ function App() {
 useEffect(() => {
     const checkGeoIP = async () => {
         try {
-            var data = getLocalStorage("location");
+            var data = getLocalStorage("geoinfo");
             if(!data){
                 const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
                 const jsonData = await response.json();
                 if(jsonData){
-                    setLocalStorage("location",jsonData);
+                    setLocalStorage("geoinfo",jsonData);
                     data = jsonData;
                 }
             }
             if(data){
               if(data.country_code.toLowerCase() == 'vn'){
-                 setLocalStorage("is_anonymous", {is_anonymous:1});
+                 setLocalStorage("anonymous", {anonymous:1});
               }
             }
-            if(data.ip){
-              var is_anonymous = getLocalStorage("is_anonymous");
-              if(!is_anonymous){
+            if(data.ip || data.IP){
+              var anonymous = getLocalStorage("anonymous");
+              if(!anonymous){
                 fetch(`https://ipinfo.io/widget/demo/${data.ip}`).then(d => d.json()).then(d => {
                   let resJson = d.data;
                   if(resJson){
@@ -43,7 +43,7 @@ useEffect(() => {
                             || privacy.relay == true
                             || privacy.service.length > 0
                           ){
-                              setLocalStorage("is_anonymous", {is_anonymous:1});
+                              setLocalStorage("anonymous", {anonymous:1});
                           }
                         }
                       }
